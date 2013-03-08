@@ -1,4 +1,4 @@
-# Scatter WP Plugin Deploy
+# Scatter Deploys
 
 This is an example of a deploy repo that can be used with [Scatter](https://github.com/evansolomon/scatter/).  The easiest use case would be to check out this (your) deploy repo to `/path/to/scatter/deploys`, which is `gitignore`'d by Scatter and will be automatically searched by the `scatter` (and `scap`) command.
 
