@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+ssh servername.com "bash -s" < "`dirname $0`/git-pull.sh"
