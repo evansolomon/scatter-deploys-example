@@ -107,7 +107,7 @@ if [ -d "tags/$README_VERSION/" ]; then
 fi
 
 # svn rm deleted files
-svn st | ack "^\!" | awk '{print $2}' | xargs svn rm
+svn st | grep "^\!" | awk '{print $2}' | xargs svn rm
 
 # Add all new files that are not set to be ignored
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
