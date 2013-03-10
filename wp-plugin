@@ -80,6 +80,9 @@ svn co $SVNURL $SVNPATH
 echo "Ignoring github specific files and deployment script"
 svn propset svn:ignore ".git .gitignore" "$SVNPATH/trunk/"
 
+# Reset files so that we can find all changes
+rm -rf $SVNPATH/trunk/*
+
 # Export Git -> SVN
 echo "Exporting the HEAD of master from git to the trunk of SVN"
 git checkout-index -a -f --prefix=$SVNPATH/trunk/
@@ -97,8 +100,16 @@ fi
 echo "Changing directory to SVN and committing to trunk"
 cd $SVNPATH/trunk/
 
+# Make sure SVN tag doesn't exist yet
+if [ -d "tags/$README_VERSION/" ]; then
+  echo "The $README_VERSION tag already exists in SVN, exiting..."
+  exit 1
+fi
+
+# svn rm deleted files
+svn st | ack "^\!" | awk '{print $2}' | xargs svn rm
+
 # Add all new files that are not set to be ignored
-# Todo: svn rm deleted files
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
 
 # Commit to SVN
