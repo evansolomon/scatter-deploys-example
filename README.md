@@ -2,7 +2,7 @@
 
 This is an example of a deploy repo that can be used with [Scatter](https://github.com/evansolomon/scatter/).  The easiest use case would be to check out this (your) deploy repo to `~/.deploys`.
 
-You can install Scatter with `gem installs scatter_deploy`.
+You can install Scatter with `gem install scatter_deploy`.
 
 ## Example Deploys
 
