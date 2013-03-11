@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-DEPLOYDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-BASEDIR=$(dirname $DEPLOYDIR)
-
-$BASEDIR/wp-plugin wp-plugin-name
