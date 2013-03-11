@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Deploy to rubygems.org
+
+echo "Switching to $1"
+cd $1
+
+rm *.gem
+ls | ack "\.gemspec$" | xargs gem build
+ls | ack "\.gem$" | xargs gem push
