@@ -91,7 +91,7 @@ rm -rf $SVNPATH/trunk/*
 
 # Export Git -> SVN
 echo "Exporting the HEAD of master from git to the trunk of SVN"
-git checkout-index -a -f --prefix=$SVNPATH/trunk/
+cp -r . $SVNPATH/trunk/
 
 # If submodule exist, recursively check out their indexes
 if [ -f ".gitmodules" ]
