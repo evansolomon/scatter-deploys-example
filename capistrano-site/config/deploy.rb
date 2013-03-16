@@ -27,7 +27,7 @@ namespace :nginx do
   end
 
   desc "Reloads nginx"
-  task :restart, :roles => :app do
+  task :reload, :roles => :app do
     run "#{sudo} /etc/init.d/nginx reload"
   end
 
