@@ -28,8 +28,7 @@ if git status | ack "Your branch is" >/dev/null
     exit 1
 fi
 
-# Ghetto way to get the version
-VERSION=$(ack "\"version\": \"(.+)\"," package.json --output="\$1")
+VERSION=$(node -e "var pkg = require('./package.json'); console.log(pkg.version);")
 
 # Make sure the tag doesn't already exist in Git
 if git show-ref --tags --quiet --verify -- "refs/tags/$VERSION"
