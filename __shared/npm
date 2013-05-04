@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+# Go to the repo
+echo "Switching to $1"
+cd $1
+
+# Only publish from master
+if git branch | ack "\* master" >/dev/null
+  then
+    echo "You're on master, good to go"
+  else
+    echo "Only publish from master"
+    exit 1
+fi
+
+# Check for dirty branch
+if [[ $(git status --porcelain) != "" ]]
+then
+  echo "Dirty branch, exiting"
+  exit 1
+fi
+
+# Fetch any remote commits
+git fetch --all
+if git status | ack "Your branch is" >/dev/null
+  then
+    echo "Your branch and the remote are out of sync"
+    exit 1
+fi
+
+# Ghetto way to get the version
+VERSION=$(ack "\"version\": \"(.+)\"," package.json --output="\$1")
+
+# Make sure the tag doesn't already exist in Git
+if git show-ref --tags --quiet --verify -- "refs/tags/$VERSION"
+  then
+    echo "Version $VERSION already exists as git tag. Exiting...."
+    exit 1
+  else
+    echo "Git version does not exist. Let's proceed..."
+fi
+
+# Tag the new version in Git
+echo "Tagging new version in git"
+git tag "$VERSION"
+
+# Push the tag
+echo "Pushing tags to origin"
+git push origin master --tags
+
+# Do it
+npm publish
