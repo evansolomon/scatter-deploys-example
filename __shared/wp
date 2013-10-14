@@ -13,7 +13,7 @@ fi
 
 # Setup plugin details
 PLUGINPATH=$1
-PLUGINSLUG=$(basename $PLUGINPATH | sed 's/^wp-//g')
+PLUGINSLUG=$(basename $PLUGINPATH | sed 's/^wp-//g' | sed 's/_/-/g')
 MAINFILE=$2
 
 cd $PLUGINPATH
@@ -29,7 +29,7 @@ fi
 # Default main file
 if [[ $MAINFILE == "" ]]
 then
-  MAINFILE=$(ack "^Plugin Name:" -l | xargs ack "^Version:" -l)
+  MAINFILE=$(grep "^Plugin Name:" -l * | xargs grep "^Version:" -l)
   if [[ $MAINFILE == "" ]]
   then
     echo "Could not find the main plugin file, exiting..."
